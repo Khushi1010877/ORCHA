@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ORCHA — AI Product Feedback Analyst</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <span class="nav-title">⬡ ORCHA</span>
+        </div>
+        <div class="nav-links">
+            <button class="nav-btn active" data-tab="analyze" onclick="showTab('analyze')">Analyze</button>
+            <button class="nav-btn" data-tab="memory" onclick="showTab('memory')">Memory</button>
+            <button class="nav-btn" data-tab="compare" onclick="showTab('compare')">Compare</button>
+        </div>
+    </nav>
+
+    <!-- MAIN -->
+    <main class="container">
+
+        <!-- ANALYZE TAB -->
+        <div id="tab-analyze" class="tab active">
+
+            <div style="text-align:center; margin-bottom:32px">
+                <h1>AI Product Feedback Analyst</h1>
+                <p>Enter any product and ORCHA will research, analyze, and summarize real user feedback.</p>
+            </div>
+
+            <input
+                type="text"
+                id="product-input"
+                placeholder="e.g. Lakme Mauve Party Lipstick..."
+                onkeydown="if(event.key==='Enter') runAnalyze()"
+            />
+
+            <button class="primary" id="analyze-btn" onclick="runAnalyze()">Analyze</button>
+
+            <!-- error -->
+            <div id="error-box" class="error hidden"></div>
+
+            <!-- pipeline steps -->
+            <div id="pipeline" class="pipeline hidden">
+                <div class="step" id="step-1">
+                    <span>📋 Planning — Generating search queries</span>
+                    <span id="status-1">Waiting...</span>
+                </div>
+                <div class="step" id="step-2">
+                    <span>🔍 Searching — Fetching real web results</span>
+                    <span id="status-2">Waiting...</span>
+                </div>
+                <div class="step" id="step-3">
+                    <span>🧠 Analyzing — Extracting themes and sentiment</span>
+                    <span id="status-3">Waiting...</span>
+                </div>
+                <div class="step" id="step-4">
+                    <span>📝 Summarizing — Generating executive report</span>
+                    <span id="status-4">Waiting...</span>
+                </div>
+            </div>
+
+            <!-- result card -->
+            <div id="result-card" class="card hidden">
+
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px">
+                    <div>
+                        <span id="result-badge" class="purple">LIVE</span>
+                        <h2 id="result-product" style="margin-top:8px"></h2>
+                    </div>
+                    <div class="export-btns">
+                        <button class="secondary" onclick="downloadHTML()">⬇ HTML</button>
+                        <button class="secondary" onclick="downloadPDF()">⬇ PDF</button>
+                    </div>
+                </div>
+
+                <div class="verdict" id="result-verdict"></div>
+
+                <div class="stats">
+                    <div class="stat">
+                        <div class="stat-value" id="result-sentiment"></div>
+                        <div class="stat-label">Sentiment</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value" id="result-severity"></div>
+                        <div class="stat-label">Severity Score</div>
+                    </div>
+                </div>
+
+                <div class="section-title">Key Points</div>
+                <ul id="key-points"></ul>
+
+                <div class="section-title">Action Items</div>
+                <ul id="action-items"></ul>
+
+                <div class="section-title">Executive Summary</div>
+                <p id="final-summary"></p>
+
+            </div>
+
+        </div>
+
+        <!-- MEMORY TAB -->
+        <div id="tab-memory" class="tab">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px">
+                <h2>Saved Analyses</h2>
+                <button class="secondary" onclick="loadMemory()">↻ Refresh</button>
+            </div>
+            <div id="memory-list">
+                <p style="color:#64748b">No analyses saved yet.</p>
+            </div>
+        </div>
+
+        <!-- COMPARE TAB -->
+        <div id="tab-compare" class="tab">
+            <h2 style="margin-bottom:24px">Compare Products</h2>
+            <input type="text" id="compare-a" placeholder="Product A e.g. iPhone 15"/>
+            <input type="text" id="compare-b" placeholder="Product B e.g. Samsung S24"/>
+            <button class="primary" onclick="runCompare()">Compare</button>
+            <div id="compare-error" class="error hidden"></div>
+            <div id="compare-result" class="hidden"></div>
+        </div>
+
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>
