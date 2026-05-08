@@ -1,4 +1,4 @@
-const API = "http://new-elastic-ip:8000";
+const API = "http://54.89.20.133:8000";
 let currentProduct = null;
 
 function showTab(name) {
